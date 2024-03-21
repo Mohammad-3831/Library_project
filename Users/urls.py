@@ -11,7 +11,3 @@ urlpatterns = [
     path('update', UpdateUserView.as_view(), name='update_users'),
     path('delete', DeleteUserView.as_view(), name='delete_users'),
 ]
-
-
-
-# کپی پیست می کنی کووووووووووون گشاددددددد حواست باشه کووووووووووووووووووونییییییییییییییییییییییییییییییییییییییییییییییییییییییییییست
