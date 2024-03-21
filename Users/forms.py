@@ -4,20 +4,22 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django.core import validators
 
+
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
 
-    password1 = forms.CharField(label="Password :", widget=forms.PasswordInput(attrs={'class':'form-control rounded text-center'}))
+    password1 = forms.CharField(label="Password :",
+                                widget=forms.PasswordInput(attrs={'class': 'form-control rounded text-center'}))
     password2 = forms.CharField(
-        label="Confirm Password :", widget=forms.PasswordInput(attrs={'class':'form-control rounded text-center'})
+        label="Confirm Password :", widget=forms.PasswordInput(attrs={'class': 'form-control rounded text-center'})
     )
 
     class Meta:
         model = User
-        fields = ("email",)
+        fields = ("username",)
         widgets = {
-            'email': forms.TextInput(attrs={'class':'form-control rounded text-center'})
+            'username': forms.TextInput(attrs={'class': 'form-control rounded text-center'})
         }
 
     def clean_password2(self):
@@ -47,11 +49,16 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["email", "password","is_active", "is_admin"]
+        fields = ("username",)
+
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'class':'form-control rounded text-center'}),label="Please Enter Your Username :" )
-    password = forms.CharField(max_length=150,widget=forms.PasswordInput(attrs={'class':'form-control rounded text-center'}),label="Please Enter Your Password :")
+    username = forms.CharField(max_length=150,
+                               widget=forms.TextInput(attrs={'class': 'form-control rounded text-center'}),
+                               label="Please Enter Your Username :")
+    password = forms.CharField(max_length=150,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control rounded text-center'}),
+                               label="Please Enter Your Password :")
 
     # def clean_email(self):
     #     email = self.cleaned_data.get('email')
@@ -59,16 +66,22 @@ class LoginForm(forms.Form):
     #         raise ValidationError('invalid value : %(value)s is invalid',code='invalid',params={'value':f'email'})
     #     return email
 
+
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'class':'form-control rounded text-center'}),label="Please Enter Your Username :" )
-    password1 = forms.CharField(max_length=150,widget=forms.PasswordInput(attrs={'class':'form-control rounded text-center'}),label="Please Enter Your Password  :")
-    password2 = forms.CharField(max_length=150,widget=forms.PasswordInput(attrs={'class':'form-control rounded text-center'}),label="Please Enter Your Password Again :")
+    username = forms.CharField(max_length=150,
+                               widget=forms.TextInput(attrs={'class': 'form-control rounded text-center'}),
+                               label="Please Enter Your Username :")
+    password1 = forms.CharField(max_length=150,
+                                widget=forms.PasswordInput(attrs={'class': 'form-control rounded text-center'}),
+                                label="Please Enter Your Password  :")
+    password2 = forms.CharField(max_length=150,
+                                widget=forms.PasswordInput(attrs={'class': 'form-control rounded text-center'}),
+                                label="Please Enter Your Password Again :")
 
     def clean_password(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
-        if password1 != password2 :
-            raise ValidationError('invalid value : %(value)s is invalid',code='invalid',params={'value':f'password1'})
+        if password1 != password2:
+            raise ValidationError('invalid value : %(value)s is invalid', code='invalid',
+                                  params={'value': f'password1'})
         return password1
-
-
